@@ -5,7 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Journal {
-    private String subjectName;
-    private String className;
+public class TeacherNamesDTO {
+    private Integer id;
+    private String firstname;
+    private String lastname;
+
 }
