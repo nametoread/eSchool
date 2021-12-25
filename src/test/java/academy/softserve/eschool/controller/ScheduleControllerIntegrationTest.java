@@ -19,6 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +48,7 @@ public class ScheduleControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
-    String expectedJSON = "{\"startOfSemester\":\"2019-09-01\",\"endOfSemester\":\"2019-12-01\"," +
+    String expectedJSON = "{\"startOfSemester\":\"" + this.getSemesterDate(true) +"\",\"endOfSemester\":\"" + this.getSemesterDate(false) + "\"," +
             "\"className\":" +
                 "{\"id\":2,\"classYear\":2018,\"className\":\"7-А\",\"classDescription\":\"\",\"isActive\":true,\"numOfStudents\":3}," +
             "\"mondaySubjects\":" +
@@ -93,7 +95,12 @@ public class ScheduleControllerIntegrationTest {
                 .headers(headers))
                 .andExpect(status().isOk())
                 .andExpect((MockMvcResultMatchers.jsonPath("$.data.className")).isNotEmpty())
-                .andExpect((MockMvcResultMatchers.jsonPath("$.data.startOfSemester")).value("2019-09-01"));
+                .andExpect((MockMvcResultMatchers.jsonPath("$.data.startOfSemester")).value(this.getSemesterDate(true)));
+    }
+
+    private String getSemesterDate(boolean start) {
+        return start ? LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                     : LocalDate.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
 }
