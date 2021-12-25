@@ -76,15 +76,15 @@ public class ScheduleServiceImplTest {
 
         Map<String, Object> map1 = new HashMap<>();
         map1.put("date", "2018-11-20");
-        map1.put("lesson_number", "1");
-        map1.put("id", "1");
+        map1.put("lesson_number", (byte) 1);
+        map1.put("id", 1);
         map1.put("name", "Історія України");
         map1.put("description", "Гуманітарний навчальний предмет. Починає вивчатись із 5-го класу");
 
         Map<String, Object> map2 = new HashMap<>();
         map2.put("date", "2018-12-08");
-        map2.put("lesson_number", "1");
-        map2.put("id", "2");
+        map2.put("lesson_number", (byte) 1);
+        map2.put("id", 2);
         map2.put("name", "Інформатика");
         map2.put("description", "");
 
