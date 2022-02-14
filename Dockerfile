@@ -1,10 +1,24 @@
-FROM maven:3.5.2-jdk-8-alpine AS MAVEN_TOOL_CHAIN
-COPY pom.xml /tmp/
-COPY src /tmp/src/
-WORKDIR /tmp/
-RUN mvn package
+FROM maven:3-jdk-8-slim as builder
 
-FROM openjdk:8-jdk-alpine
-COPY --from=MAVEN_TOOL_CHAIN /tmp/target/eschool.jar eschool.jar
+WORKDIR /tmp/eschool
+COPY . ./
+
+# ARG sonar_project_key
+# ARG sonar_host_url
+# ARG sonar_login
+
+# RUN mvn clean verify sonar:sonar \
+#   -Dsonar.projectKey=$sonar_project_key \
+#   -Dsonar.host.url=$sonar_host_url \
+#   -Dsonar.login=$sonar_login
+
+RUN mvn package -DskipTests
+
+FROM openjdk:8-jre-slim
+
+WORKDIR /opt/eschool
+COPY --from=builder /tmp/eschool/target/*.jar ./app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "eschool.jar"]
+
+ENTRYPOINT ["java"]
+CMD ["-jar", "./app.jar"]
