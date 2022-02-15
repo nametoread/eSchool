@@ -1,6 +1,6 @@
 # eSchool Sorcery
 
-Customized fork of eSchool project.
+Customized fork of eSchool project
 
 - Parent repo: https://github.com/yurkovskiy/eSchool
 - Branch: **develop**
