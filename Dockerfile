@@ -12,6 +12,7 @@ COPY . ./
 #   -Dsonar.host.url=$sonar_host_url \
 #   -Dsonar.login=$sonar_login
 
+# FROM gcr.io/distroless/java:8
 RUN mvn package -DskipTests
 
 FROM openjdk:8-jre-slim
